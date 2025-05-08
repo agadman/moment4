@@ -9,6 +9,13 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+  },
   password: {
     type: String,
     required: true,
@@ -33,9 +40,9 @@ userSchema.pre('save', async function (next) {
 });
 
 // Register user
-userSchema.statics.register = async function (username, password) {
+userSchema.statics.register = async function (username, email, password) {
   try {
-    const user = new this({ username, password });
+    const user = new this({ username, email, password });
     await user.save();
     return user;
   } catch (error) {
