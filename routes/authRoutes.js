@@ -49,23 +49,23 @@ router.post('/register', async (req, res) => {
 // Login user
 router.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
         // Validate input
-        if (!username || !password) {
-            return res.status(400).json({ error: 'Du måste ange användarnamn och lösenord!' });
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Du måste ange email och lösenord!' });
         }
 
         // Check credentials
         //Does user exist?
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
         if (!user) {
-            return res.status(401).json({ error: 'Felaktigt användarnamn/lösenord' });
+            return res.status(401).json({ error: 'Felaktig email/lösenord' });
         }
         // Check password
         const isPasswordMatch = await user.comparePassword(password);
         if (!isPasswordMatch) {
-            return res.status(401).json({ error: 'Felaktigt användarnamn/lösenord' });
+            return res.status(401).json({ error: 'Felaktig email/lösenord' });
         } else {
             // Create JWT   
             const payload = { username: user.username, email: user.email};
