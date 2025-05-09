@@ -32,7 +32,7 @@ function authenticateToken(req, res, next) {
     });    
 }
 
-//Starta applikationen
+//Start app
 app.listen(port, () => {
     console.log(`Server running att http://localhost:${port}`);
 }

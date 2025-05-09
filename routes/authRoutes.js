@@ -25,18 +25,18 @@ router.post('/register', async (req, res) => {
     try {
       const { username, email, password } = req.body;
   
-      // Validerar input
+      // Validate input
       if (!username || !email || !password) {
         return res.status(400).json({ error: 'Du måste fylla i alla fält!' });
       }
   
-      // Kontrollerar om email redan finns
+      // Does email exist?
       const existingEmail = await User.findOne({ email });
       if (existingEmail) {
         return res.status(400).json({ error: 'E-postadressen är redan registrerad.' });
       }
   
-      // Sparar användare
+      // Save user
       const user = new User({ username, email, password });
       await user.save();
   
